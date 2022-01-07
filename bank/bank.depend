@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1641499409 source:c:\users\rupeeka\desktop\oops_project\bank\main.cpp
+	<iostream>
+	"arraylist.h"
+
+1641500482 c:\users\rupeeka\desktop\oops_project\bank\arraylist.h
+	<string.h>
+	<stdio.h>
+	<vector>
+
+1641500018 source:c:\users\rupeeka\desktop\oops_project\bank\arraylist.cpp
+	<iostream>
+	"arraylist.h"
+	<vector>
+	<array>
+

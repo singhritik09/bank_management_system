@@ -1,9 +1,12 @@
-#include <string.h>
+#include <iostream>
 #include <stdio.h>
 #include <vector>
+#include <string>
 #define MAX 100
 using namespace std;
-class arraylist {
+
+class arraylist
+{
 public:
     arraylist();
     void add();
@@ -29,14 +32,25 @@ protected:
 class Bank:public arraylist
 {
 private:
-    int n;
+    int length,n;
+    int amount;
+    int total;
     vector <string>v1;
     vector<string>v2;
     vector<string>v3;
+    string nm,an,act,pin;
+
     //string name;
 public:
+
+
     Bank();
-    void read();
-    void display();
+    void readdb();
+    void displaydb();
+
+    void create();
+    void displayuser();
+    void deposit();
+    void withdraw();
 };
 

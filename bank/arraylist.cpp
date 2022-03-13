@@ -215,5 +215,3 @@ void Bank::withdraw()
     }
 
 }
-
-

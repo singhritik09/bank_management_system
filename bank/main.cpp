@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <bits/stdc++.h>
 #include <string>
 #define MAX 30
@@ -12,63 +13,18 @@ public:
     void deleteitem(int val);
     void Display();
     void clear();
-    int get(int index); //const;
+    int get(int index);
     void insert(int index, int value);
-    bool isEmpty(); //const;
+    bool isEmpty();
     void remove(int index);
     void set(int index, int value);
-    int size(); //const;
-    //string toString() const;
+    int size();
 
-//protected:
+
     int* data; // array of elements
     int myCapacity; // length of array
     int length=0; // number of elements added
 };
-/*EMPLOYEE CLASS*/
-class employee:public arraylist
-{
-public:
-    void read_cap(int n)
-    {
-        myCapacity=n;
-    }
-
-    int *eid=new int(myCapacity);
-    //char *name=new char[MAX];
-     string name[MAX];
-    //name=new string*(myCapacity);//new char[myCapacity];
-    int *pin=new int(myCapacity);
-    void read_employee(int myCapacity)
-    {
-        for(int i=0;i<myCapacity;i++)
-        {
-            cout<<"Enter ID: ";
-            cin>>eid[i];
-            cout<<"Enter name: ";
-            cin>>name[i];
-            //cout<<"Enter pin: ";
-            //cin>>pin[i];
-            length++;
-        }
-
-    }
-
-    int total_employee()
-    {
-        return length;
-    }
-
-    void display_employee(int myCapacity){
-        for(int i=0;i<myCapacity;i++)
-        {
-            cout<<"Employee ID: "<<eid[i]<<" Name: "<<name[i]<<endl;
-        }
-    }
-};
-
-
-
 
 /* **************************BANK CLASS*********************************/
 
@@ -90,14 +46,13 @@ public:
     Bank();
     void readdb();
     void displaydb();
-
     void create();
     void displayuser();
     void deposit();
     void withdraw();
+    void loan();
+    void see_loan();
 };
-
-
 
 
 arraylist::arraylist()
@@ -108,16 +63,15 @@ arraylist::arraylist()
 void arraylist::add()
 {
     int id=0;
+    cout<<"Enter -1 to stop"<<endl;
     while(id!=-1)
     {
-        cout<<"Enter Unique code given to each customer: ";
+        cout<<"Enter Unique code given to each customer:";
         cin>>id;
         data[length]=id;
         length++;
     }
-    while(id!=-1);
     length=length-1;
-    cout<<"Length: "<<length;
 }
 
 void arraylist::remove(int index)
@@ -126,6 +80,7 @@ void arraylist::remove(int index)
     {
         data[i]=data[i+1];
     }
+    data[length-1]=0;
     length--;
 }
 int arraylist::size()
@@ -139,14 +94,12 @@ bool arraylist::isEmpty()
 
 void arraylist::insert(int index,int val)
 {
-    //int n;
     for(int i=length;i>index;i--)
     {
         data[i]=data[i-1];
     }
     data[index]=val;
     length++;
-    //n=length;
 }
 
 int arraylist::get(int index)
@@ -173,8 +126,6 @@ void arraylist::deleteitem(int val)
     }
     if (i < length)
     {
-    // reduce size of array and move all
-    // elements on space ahead
     length = length - 1;
     for (int j=i; j<length; j++)
         data[j] = data[j+1];
@@ -186,16 +137,12 @@ void arraylist::deleteitem(int val)
 Bank::Bank()
 {
     n=0;
-    //total=0;
-    //amount=0;
-
 }
 
+
 void Bank::readdb()
-{   //ERROR IN CALLING LENGTH AND ADD OF ARRAY LIST
-    //ERROR IS IN FUNCTION CALL
-    //add();
-    add();    //FUNCTION CALL FROM PARENT
+{
+    add();
     n=arraylist::length;
     for(int i=0;i<n;i++)
     {
@@ -217,8 +164,7 @@ void Bank::readdb()
 
 void Bank::displaydb()
 {
-    cout<<"***********DATABASE OF CUSTOMERS ADDED*******************";
-    //IF V1 SIZE IS EQUAL TO V2 AND V3
+    cout<<"***********DATABASE OF CUSTOMERS ADDED*******************"<<endl;
     for (int i = 0; i < v1.size(); ++i)
     {
         cout<<"Name:" << v1[i] << "\t"<<"Account number:"<<v2[i]<<"\t"<<"Account type:"<<v3[i];
@@ -259,7 +205,7 @@ void Bank::deposit()
     cin>>amount;
     total=total+amount;
     while(1){
-            cout<<"Enter 1 for receit"<<endl;
+            cout<<"Enter 1 for receipt"<<endl;
             cout<<"Enter 2 for main menu"<<endl;
             cout<<"Enter choice: ";
             cin>>choice;
@@ -267,8 +213,8 @@ void Bank::deposit()
         switch(choice){
     case 1:
         cout<<"\n_____Total Amount______: "<<total<<endl;
-        cout<<"_______Amount deposited______: "<<amount<<endl;
-        cout<<"_____At Bangalore Bank acc no xxxxxx637_____"<<"\t"<<"AT:14:27hrs"<<endl;
+        cout<<"___Amount deposited______: "<<amount<<endl;
+        cout<<"_acc no xxxxxx637________:"<<"\t"<<"AT:19:27hrs"<<endl;
         break;
     case 2:
         exit(1);
@@ -285,10 +231,10 @@ void Bank::withdraw()
     cout<<"Enter Amount for withdraw: ";
     cin>>amount;
     total=total-amount;
-    cout<<"Do you want receit: press 1";
+    cout<<"Do you want receipt: press 1";
     while(1)
         {
-            cout<<"Enter 1 for receit"<<endl;
+            cout<<"Enter 1 for receipt"<<endl;
             cout<<"Enter 2 for main menu"<<endl;
             cout<<"Enter choice: ";
             cin>>choice;
@@ -305,8 +251,97 @@ void Bank::withdraw()
         cout<<"\n________Wrong Choice_____";
         }
     }
+}
+
+void Bank::loan()
+{
+    char name[20];
+    int amount;
+    char type[20];
+
+    int contact;
+    int ac_no;
+
+    ofstream out("loan.txt");
+
+    cout<<"Enter name: ";
+    cin>>name;
+    cout<<"Enter amount: ";
+    cin>>amount;
+    cout<<"Enter contact number:";
+    cin>>contact;
+    cout<<"Enter account number: ";
+    cin>>ac_no;
+    cout<<"Enter type of loan: ";
+    cin>>type;
+
+    out<<name<<" ";
+    out<<ac_no<<" ";
+    out<<amount<<" ";
+    out<<contact<<" ";
+    out<<type<<" ";
+    out.close();
+    cout<<"\n";
 
 }
+
+void Bank::see_loan()
+{
+    string myText;
+    ifstream ReadFile("loan.txt");
+    while (getline (ReadFile, myText)) {
+        cout << myText;
+    }
+    ReadFile.close();
+}
+
+/*EMPLOYEE CLASS*/
+
+class employee:public arraylist
+{
+public:
+    void read_cap(int n)
+    {
+        myCapacity=n;
+    }
+    int *eid=new int(myCapacity);
+    string name[MAX];
+    int *pin=new int(myCapacity);
+    void read_employee(int myCapacity)
+    {
+        for(int i=0;i<myCapacity;i++)
+        {
+            cout<<"Enter ID: ";
+            cin>>eid[i];
+            cout<<"Enter name: ";
+            cin>>name[i];
+            cout<<"Enter pin: ";
+            cin>>pin[i];
+            length++;
+        }
+
+    }
+
+    int total_employee()
+    {
+        return length;
+    }
+
+    void display_employee(int myCapacity){
+        for(int i=0;i<myCapacity;i++)
+        {
+            cout<<"Employee ID: "<<eid[i]<<" Name: "<<name[i]<<endl;
+        }
+    }
+/*
+    void delete_item(int index)
+    {
+        remove(eid[index]);
+        remove(name[index]);
+        //remove(pin[index]);
+    }
+*/
+};
 
 int main()
 {
@@ -314,24 +349,6 @@ int main()
 
     employee e1;
     Bank b1;
-    /*
-    cout<<"Enter n: ";
-    cin>>n;
-    e1.read_cap(n);
-    //Bank b1;
-    e1.read_employee(n);
-    e1.display_employee(n);
-    cout<<endl<<"Total Employees: "<<e1.total_employee()<<endl;
-    */
-
-    //arraylist ar;
-    //ar.add();
-    //ar.Display();
-    //system("pause");
-    //b1.add();
-    //b1.readdb();
-    //b1.displaydb();
-
 
     int userinput;
     cout<<"********************************BANK MANAGEMENT INTERFACE***********************************************\n"<<endl;
@@ -345,8 +362,9 @@ int main()
         cout<<"Enter 5 to Deposit Money for user:"<<endl;
         cout<<"Enter 6 to Withdraw Money for user:"<<endl;
         cout<<"Enter 7 to create new Employee: "<<endl;
-
-        cout<<"Enter 9 to Exit:"<<endl;
+        cout<<"Enter 8 to request for a loan: "<<endl;
+        cout<<"Enter 9 to see loan request details: "<<endl;
+        cout<<"Enter 10 to Exit:"<<endl;
         cout<<"Enter your choice:";
         cin>>userinput;
         cout<<"\n";
@@ -379,14 +397,21 @@ int main()
         case 7:
             int n;
 
-        cout<<"Enter n: ";
+        cout<<"Enter number of new employees : ";
         cin>>n;
         e1.read_cap(n);
         e1.read_employee(n);
         e1.display_employee(n);
         e1.total_employee();
             break;
+        case 8:
+            b1.loan();
+            break;
         case 9:
+            cout<<"Name "<<"Account "<<"Amount "<<"Contact "<<"Type"<<endl;
+            b1.see_loan();
+            break;
+        case 10:
             exit(1);
         default:
             cout<<"\nxxxxxxxxxxxxxx Wrong Choice xxxxxxxxxxxxxxx";
